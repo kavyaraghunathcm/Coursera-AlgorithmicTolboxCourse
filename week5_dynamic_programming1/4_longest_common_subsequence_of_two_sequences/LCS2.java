@@ -3,9 +3,31 @@ import java.util.*;
 public class LCS2 {
 
     private static int lcs2(int[] a, int[] b) {
-        //Write your code here
-        return Math.min(a.length, b.length);
+        int alength = a.length;
+        int blength = b.length;
+        //write your code here
+        int[][] d = new int[alength + 1][blength + 1];
+        for (int i = 0; i <=alength; i++) {
+            d[i][0] = 0;
+        }
+        for (int j = 0; j <= blength; j++) {
+            d[0][j] = 0;
+        }
+        for (int j = 1; j <= blength; j++) {
+            for (int i = 1; i <= alength; i++) {
+                int insertion = d[i][j - 1];
+                int deletion = d[i - 1][j];
+                int match = d[i - 1][j - 1]+1;
+                if (a[i - 1] == b[j - 1]) {
+                    d[i][j] =match;
+                } else {
+                    d[i][j] = Math.max(insertion, deletion);
+                }
+            }
+        }
+       return d[alength][blength];
     }
+
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
